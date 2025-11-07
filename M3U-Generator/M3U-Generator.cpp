@@ -40,7 +40,10 @@ static std::unordered_set<std::wstring> GetUnorderedSetFromArgument(const std::w
         while (std::getline(ss, token, L','))
         {
             if (!token.empty())
+            {
+                Utils::ToLower(token);
                 set.emplace(token);
+            }
         }
     }
 
