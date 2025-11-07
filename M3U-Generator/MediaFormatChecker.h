@@ -28,8 +28,8 @@ private:
 
     const std::unordered_set<std::wstring> VIDEO_FORMATS = {
         L"mp4", L"avi", L"mkv", L"mov", L"wmv", L"flv", L"webm", L"mpeg",
-        L"mpg", L"m4v", L"3gp", L"3g2", L"vob", L"ogv", L"ts", L"mts",
-        L"m2ts", L"divx", L"xvid", L"f4v", L"rm", L"rmvb"
+        L"mpg", L"m4v", L"3gp", L"3g2", L"vob", L"ogv", L"xvid", L"mts",
+        L"m2ts", L"divx", L"f4v", L"rm", L"rmvb"
     };
 
     std::unordered_set<std::wstring> inclusions;
