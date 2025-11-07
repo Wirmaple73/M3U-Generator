@@ -1,4 +1,4 @@
-// This was supposed to be a 1-hour project in C#, not a 3-day one... I'm C++phobic forever.
+// This was supposed to be a 1-hour project in C#, not a 4-day one... I'm C++phobic forever.
 // How do y'all manage to stay sane in C++?
 
 #include "CommandLineArgs.h"
@@ -145,7 +145,7 @@ int wmain(int argc, wchar_t* argv[])
         
         if (fs::is_directory(path, ec))
         {
-            for (const fs::directory_entry& entry : fs::recursive_directory_iterator(path, ec))
+            for (const fs::directory_entry& entry : fs::recursive_directory_iterator(path, fs::directory_options::skip_permission_denied, ec))
             {
                 if (fs::is_regular_file(entry, ec) && checker.IsFormatAllowed(entry.path().extension().wstring()))
                 {
