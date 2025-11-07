@@ -97,7 +97,7 @@ int wmain(int argc, wchar_t* argv[])
     if (argc < 2)
     {
         // TODO
-        WaitForEnter("Please drag and drop your audio or video files into the executable.");
+        WaitForEnter(false, "Please drag and drop your audio or video files into the executable.");
         return 1;
     }
 
@@ -122,7 +122,7 @@ int wmain(int argc, wchar_t* argv[])
 
     if (!outputFile.is_open())
     {
-        WaitForEnter("Could not open the output file. Please ensure it's not in use by another process.");
+        WaitForEnter(false, "Could not open the output file. Please ensure it's not in use by another process.");
         return 1;
     }
 
