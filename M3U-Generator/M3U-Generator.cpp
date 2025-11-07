@@ -85,12 +85,13 @@ static void WaitForEnter(const bool isSuccessful = true, const std::string& mess
             std::cout << message << "\n\n";
         else
             std::cerr << message << "\n\n";
-
-        std::cout << "Press Enter to continue...";
     }
 
     if (!args.DoesArgumentExist(CommandLineArgs::NO_PAUSE))
+    {
+        std::cout << "Press Enter to continue...";
         std::cin.get();
+    }
 }
 
 int wmain(int argc, wchar_t* argv[])
@@ -99,8 +100,7 @@ int wmain(int argc, wchar_t* argv[])
 
     if (argc < 2)
     {
-        // TODO
-        WaitForEnter(false, "Please drag and drop your audio or video files into the executable.");
+        WaitForEnter(false, CommandLineArgs::USAGE_HELP);
         return 1;
     }
 
@@ -113,7 +113,7 @@ int wmain(int argc, wchar_t* argv[])
     if (ec)
     {
         DisplayPathError(outputPath.parent_path().wstring(), ec.message());
-        return 1;
+        return 2;
     }
 
     std::ofstream outputFile;
@@ -125,14 +125,17 @@ int wmain(int argc, wchar_t* argv[])
 
     if (!outputFile.is_open())
     {
-        WaitForEnter(false, "Could not open the output file. Please ensure it's not in use by another process.");
-        return 1;
+        WaitForEnter(false, "Could not open the output file. Please ensure it's not in use by another process and not read-only.");
+        return 3;
     }
 
     outputFile.imbue(std::locale("en_US.UTF-8"));
-    outputFile.write("\xEF\xBB\xBF", 3);  // Optional: Write the BOM
+
+    if (!args.DoesArgumentExist(CommandLineArgs::NO_BOM))
+        outputFile.write("\xEF\xBB\xBF", 3);  // Write the BOM
 
     MediaFormatChecker checker = InitMediaFormatChecker();
+    bool anyErrorOccurred = false;
 
     auto start = std::chrono::steady_clock::now();
 
@@ -157,14 +160,24 @@ int wmain(int argc, wchar_t* argv[])
                 }
 
                 if (ec)
+                {
                     DisplayPathError(entry.path().wstring(), ec.message());
+                    ec.clear();
+
+                    anyErrorOccurred = true;
+                }
             }
 
             continue;
         }
         
         if (ec)
+        {
             DisplayPathError(path.wstring(), ec.message());
+            ec.clear();
+
+            anyErrorOccurred = true;
+        }
     }
 
     outputFile.close();
@@ -173,4 +186,5 @@ int wmain(int argc, wchar_t* argv[])
     std::cout << std::format("Processed all files in {:.5f} seconds.\n", std::chrono::duration<double>(end - start).count());
 
     WaitForEnter();
+    return anyErrorOccurred ? 4 : 0;
 }
