@@ -153,7 +153,7 @@ int wmain(int argc, wchar_t* argv[])
         {
             for (const fs::directory_entry& entry : fs::recursive_directory_iterator(path, fs::directory_options::skip_permission_denied, ec))
             {
-                if (fs::is_regular_file(entry, ec) && checker.IsFormatAllowed(entry.path().extension().wstring()))
+                if (entry.is_regular_file(ec) && checker.IsFormatAllowed(entry.path().extension().wstring()))
                 {
                     Utils::WriteUtf8StringToFilestream(outputFile, entry.path().u8string() + u8"\r\n");
                     continue;
