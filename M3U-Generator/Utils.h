@@ -5,6 +5,8 @@
 #include <cwctype>
 #include <fstream>
 
+namespace fs = std::filesystem;
+
 class Utils
 {
 public:
@@ -20,5 +22,10 @@ public:
 	static inline void WriteUtf8StringToFilestream(std::ofstream& stream, const std::u8string& s) noexcept
 	{
 		stream.write(reinterpret_cast<const char*>(s.c_str()), s.length());
+	}
+
+	static inline bool IsFileEmpty(const fs::path& path) noexcept
+	{
+		return fs::file_size(path) == 0;
 	}
 };
