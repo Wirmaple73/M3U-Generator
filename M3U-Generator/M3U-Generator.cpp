@@ -129,8 +129,6 @@ int wmain(int argc, wchar_t* argv[])
         return 3;
     }
 
-    outputFile.imbue(std::locale("en_US.UTF-8"));
-
     if (!args.DoesArgumentExist(CommandLineArgs::NO_BOM))
         outputFile.write("\xEF\xBB\xBF", 3);  // Write the BOM
 
@@ -180,7 +178,11 @@ int wmain(int argc, wchar_t* argv[])
         }
     }
 
-    outputFile.close();
+    try
+    {
+        outputFile.close();
+    }
+    catch (...) { /* yummy */ }
 
     auto end = std::chrono::steady_clock::now();
     std::cout << std::format("Processed all files in {:.5f} seconds.\n", std::chrono::duration<double>(end - start).count());
