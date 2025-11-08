@@ -130,7 +130,6 @@
       <OpenMPSupport>true</OpenMPSupport>
       <OmitFramePointers>true</OmitFramePointers>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalOptions>/Qvec-report:2 /Qinline-report %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
