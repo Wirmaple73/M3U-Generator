@@ -48,6 +48,12 @@ OPTIONS:
   --no-default-formats      Reject all formats except those included via -i.
                             See the NOTES section below for a list of default formats.
 
+  --line-feed-only          Use \n (line feed) only instead of \r\n (carriage return + line feed) for
+                            new lines. Enable for better compatibility with non-Windows OSes.
+
+  --no-brag                 Disables the comment saying "Created by M3U Generator" :(
+                            Some players from the stone age might flatline after encountering it.
+
   --no-pause                Exit immediately when done instead of waiting for key press.
 
 
@@ -58,8 +64,8 @@ EXAMPLES:
   * Create an M3U8 file in the current directory:
     M3U-Generator.exe -o Output.m3u8 D:\Music
 
-  * Include only wav files:
-    M3U-Generator.exe -i wav --no-default-formats D:\Music E:\File.wav
+  * Include only wav files and make the playlist more compatible with Linux and Android:
+    M3U-Generator.exe -i wav --no-default-formats --use-line-feed D:\Music E:\File.wav
 
   * Include all video files including hevc and ts, but not avi:
     M3U-Generator.exe --video-only -i hevc,ts -e avi D:\Music "D:\My Movies"
@@ -93,6 +99,8 @@ EXIT CODES:
 	static inline const std::wstring VIDEO_ONLY         = L"--video-only";
 	static inline const std::wstring NO_DEFAULT_FORMATS = L"--no-default-formats";
 	static inline const std::wstring ALLOW_NO_EXTENSION = L"--allow-no-extension";
+    static inline const std::wstring LINE_FEED_ONLY     = L"--line-feed-only";
+    static inline const std::wstring NO_BRAG            = L"--no-brag";
 	static inline const std::wstring NO_PAUSE           = L"--no-pause";
 
 	CommandLineArgs() noexcept;
