@@ -1,10 +1,6 @@
 #pragma once
 #include <filesystem>
 
-/*
-
-*/
-
 class CommandLineArgs
 {
 private:
@@ -52,11 +48,6 @@ OPTIONS:
   --no-default-formats      Reject all formats except those included via -i.
                             See the NOTES section below for a list of default formats.
 
-  --no-bom                  For advanced users: Don't write the BOM (byte order mark). While the BOM is
-                            optional for M3U8 files, you may want to omit it when generating raw M3U
-                            playlists (without UTF-8). Beware that this might render some players unable
-                            to play files with complex (non-ANSI) characters in their name.
-
   --no-pause                Exit immediately when done instead of waiting for key press.
 
 
@@ -64,13 +55,13 @@ EXAMPLES:
   * Create an M3U8 playlist in the current directory (default):
     M3U-Generator.exe D:\Music
 
-  * Create an M3U file (non-UTF8) instead of M3U8 in the current directory:
-    M3U-Generator.exe -o Output.m3u --no-bom D:\Music
+  * Create an M3U8 file in the current directory:
+    M3U-Generator.exe -o Output.m3u8 D:\Music
 
   * Include only wav files:
     M3U-Generator.exe -i wav --no-default-formats D:\Music E:\File.wav
 
-  * Include all video files including hevc and ts, but exclude avi:
+  * Include all video files including hevc and ts, but not avi:
     M3U-Generator.exe --video-only -i hevc,ts -e avi D:\Music "D:\My Movies"
 
 
@@ -102,7 +93,6 @@ EXIT CODES:
 	static inline const std::wstring VIDEO_ONLY         = L"--video-only";
 	static inline const std::wstring NO_DEFAULT_FORMATS = L"--no-default-formats";
 	static inline const std::wstring ALLOW_NO_EXTENSION = L"--allow-no-extension";
-	static inline const std::wstring NO_BOM             = L"--no-bom";
 	static inline const std::wstring NO_PAUSE           = L"--no-pause";
 
 	CommandLineArgs() noexcept;

@@ -129,8 +129,11 @@ int wmain(int argc, wchar_t* argv[])
         return 3;
     }
 
+    // Writing the BOM makes VLC cry and unable to open the first entry
+    /*
     if (!args.DoesArgumentExist(CommandLineArgs::NO_BOM))
-        outputFile.write("\xEF\xBB\xBF", 3);  // Write the BOM
+        outputFile.write("\xEF\xBB\xBF", 3);
+    */
 
     MediaFormatChecker checker = InitMediaFormatChecker();
     bool anyErrorOccurred = false;
@@ -146,7 +149,7 @@ int wmain(int argc, wchar_t* argv[])
             Utils::WriteUtf8StringToFilestream(outputFile, path.u8string() + u8"\r\n");
             continue;
         }
-        
+
         if (fs::is_directory(path, ec))
         {
             for (const fs::directory_entry& entry : fs::recursive_directory_iterator(path, fs::directory_options::skip_permission_denied, ec))
@@ -168,7 +171,7 @@ int wmain(int argc, wchar_t* argv[])
 
             continue;
         }
-        
+
         if (ec)
         {
             DisplayPathError(path.wstring(), ec.message());
