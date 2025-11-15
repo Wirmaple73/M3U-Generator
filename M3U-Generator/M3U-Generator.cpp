@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <ranges>
 #include <sstream>
+#include <windows.h>
 
 namespace fs = std::filesystem;
 
@@ -96,6 +97,7 @@ static void WaitForEnter(const bool isSuccessful = true, const std::string& mess
 
 int wmain(int argc, wchar_t* argv[])
 {
+    SetConsoleTitleA("M3U Generator");
     args = CommandLineArgs(argv, argc);
 
     if (argc < 2)
